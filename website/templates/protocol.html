@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %}Protocol{% endblock %}
+
+ {%block content %}
+ <h1>
+    <p style="text-align:center; color:seagreen;"> 
+        NEBuilder HiFi DNA Assembly Reaction Protocol
+    </p>
+</h1>
+
+<h5> 
+    <p style="text-align:left; color:dark;"> 
+    For more detailed explanation, please refer to the "Gibson Assembly" on protocols.io. Use this
+    table as a reference when making your calculations.
+    </p>
+ </h5>
+
+
+<img src="{{url_for('static', filename='protocol.jpeg')}}" width="1100" height="1000">
+
+<h6>
+    <p style="text-align:left; color: gray;">
+    Reference: https://www.neb.com/protocols/2014/11/26/nebuilder-hifi-dna-assembly-reaction-protocol
+    </p>
+ </h6>
+
+ {% endblock %}

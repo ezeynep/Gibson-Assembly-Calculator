@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block title %}Gibson Assembly Calculator{% endblock %}
+
+ {%block content %}
+ <h1> 
+    <p style="text-align:center; color:brown;"> 
+        Welcome to the Gibson Assembly Calculator! 
+    </p>
+</h1>
+ 
+ <h2>
+    <p style="color:black;">
+        What is Gibson Assembly?
+    </p>
+</h2>
+
+ <h5> 
+    <p style="text-align:left; color:dark gray;"> 
+    Gibson Assembly, developed by Dr. Daniel Gibson and his colleagues at the J. Craig Vendor Institute 
+    is an effective method for the assembly of multiple DNA fragments. This is accomplished in a single tube 
+    isothermal reaction with Gibson Assembly Master Mix. The method utilizes adjacent DNA fragments with 
+    complementary ends which can be added for example by PCR. Then, the overlapping fragments are added the 
+    Gibson Assembly Master Mix and incubated for 15 minutes to one hour at 50 degrees Celsius. During the 
+    incubation, the Master Mix's three enzymes activities set to work on the fragments.
+    </p>
+ </h5>
+
+ <h6>
+    <p style="text-align:left; color: gray;">
+    Reference: https://www.neb.com/tools-and-resources/video-library/introduction-to-gibson-assembly?autoplay=1
+    </p>
+ </h6>
+
+<img src="{{url_for('static', filename='gibson.jpeg')}}" width="1200" height="700">
+
+<h6>
+    <p style="text-align:left; color: gray;">
+    Reference: https://www.neb.com/applications/cloning-and-synthetic-biology/dna-assembly-and-cloning/gibson-assembly
+    </p>
+ </h6>
+ {% endblock %}

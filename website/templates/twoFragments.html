@@ -1,0 +1,124 @@
+{% extends "base.html" %} {% block title %}2 Fragments{% endblock %}
+
+{%block content %}
+ <h1>
+    <p style="text-align:center; color:#1f84d1;"> 
+        2 Fragments Assembly Calculation
+    </p>
+</h1>
+
+<!--Refence numbers-->
+<body>
+    <table>
+        <tr>
+            <th>Total DNA</th>
+            <td><input type="number" id="totalDNA" style="width: 470px;"
+                placeholder="Refer to Protocol tab to determine acceptable range of values"></td>
+        </tr>
+        <tr>
+            <th>Insert:Vector</th>
+            <td><input type="number" id="insertvector" style="width: 470px;"
+                placeholder="Refer to Protocol tab to determine acceptable range of values"></td>
+        </tr>
+    </table>
+
+    <br>
+    <tr>
+        <p style="text-align: center;">
+            -- This calculator takes the molecular weight of base pair to be 650 g/mol --
+        </p>
+    </tr>
+
+    <!--Calculation table-->
+    <br>
+    <table style="width:100%;" id="twocalculator">
+        <!--Title row-->
+		<tr>
+            <td>&nbsp;</td>
+            <th style="text-align: center;">pmol Total</th>
+            <th style="text-align: center;">Size (bP)</th>
+            <th style="text-align: center;">ng Total</th>
+            <th style="text-align: center;">Conc (ng/µL)</th>
+            <th style="text-align: center;">Volume (µL)</th>
+        </tr>
+        <!--Vector row-->
+        <tr>
+            <th>Vector</th>
+            <td style="border-style: groove; background-color: rgb(189, 189, 189); width: 200px; text-align: center;" id="vector_pmol_total"></td>
+            <td><input type="number" style="width: 200px" id="sizev"></td>
+            <td style="border-style: groove; background-color: rgb(189, 189, 189); width: 200px; text-align: center;" id="vector_ng_total"></td>
+            <td><input type="number" style="width: 200px" id="concv"></td>
+            <td style="border-style: groove; background-color: yellowgreen; width: 200px; height: 30px; text-align: center;" id="vector_vol"></td>
+        </tr>
+        <!--Total insert row-->
+        <tr>
+            <th>Total Insert</th>
+            <td style="border-style: groove; background-color: rgb(189, 189, 189); width: 200px; text-align: center;" id="total_insert_pmol_total"></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <!--Insert 1 row-->
+        <tr>
+            <th>Insert 1</th>
+            <td style="border-style: groove; background-color: rgb(189, 189, 189); width: 200px; text-align: center;" id="insert1_pmol_total"></td>
+            <td><input type="number" style="width: 200px" id="size1"></td>
+            <td style="border-style: groove; background-color: rgb(189, 189, 189); width: 200px; text-align: center;" id="insert1_ng_total"></td>
+            <td><input type="number" style="width: 200px" id="conc1"></td>
+            <td style="border-style: groove; background-color: yellowgreen; width: 200px; height: 30px; text-align: center;" id="insert1_vol"></td>
+        </tr>
+        <!--H20 row-->
+        <tr>
+            <th>H20</th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td style="border-style: groove; background-color: yellowgreen; width: 200px; height: 30px; text-align: center;" id="h20_vol"></td>
+        </tr>
+	</table>
+    
+    <!--Code to calculate the ratio and put it in the table-->
+    <script type="text/javascript">
+        function calculator() {
+            //Get the input values
+            var dna = Number(document.getElementById("totalDNA").value);
+            var insvec = Number(document.getElementById("insertvector").value);
+            var sizev = Number(document.getElementById("sizev").value);
+            var size1 = Number(document.getElementById("size1").value);
+            var concv = Number(document.getElementById("concv").value);
+            var conc1 = Number(document.getElementById("conc1").value);
+
+            //Math
+            var vector_pmol_total = dna/(1 + insvec);
+            var total_insert_pmol_total = (insvec * dna) / (1 + insvec);
+            var insert1_pmol_total = (total_insert_pmol_total) / 4;
+            var vector_ng_total = (vector_pmol_total / 1000) * 650 * sizev;
+            var insert1_ng_total = (insert1_pmol_total / 1000) * 650 * size1;
+            var vector_vol = (vector_ng_total / concv);
+            var insert1_vol = insert1_ng_total / conc1;
+            var h20_vol = 10 - (vector_vol + insert1_vol);
+
+            //Add it to the table
+            document.getElementById("vector_pmol_total").innerHTML = vector_pmol_total;
+            document.getElementById("total_insert_pmol_total").innerHTML = total_insert_pmol_total;
+            document.getElementById("insert1_pmol_total").innerHTML = insert1_pmol_total;
+            document.getElementById("vector_ng_total").innerHTML = vector_ng_total;
+            document.getElementById("insert1_ng_total").innerHTML = insert1_ng_total;
+            document.getElementById("vector_vol").innerHTML = Math.round((vector_vol + Number.EPSILON) * 100) / 100;
+            document.getElementById("insert1_vol").innerHTML = Math.round((insert1_vol + Number.EPSILON) * 100) / 100;
+            document.getElementById("h20_vol").innerHTML = Math.round((h20_vol + Number.EPSILON) * 100) / 100;
+        }
+    </script>
+    
+    <!--Calculate the reference number button-->
+    <tr>
+        <th colspan="5" height="30" style="text-align: center;">
+            <input type="submit" value="Calculate" onclick="calculator()" style="text-align: center;">
+        </th>
+    </tr>
+    
+</body>
+{% endblock %}
+
